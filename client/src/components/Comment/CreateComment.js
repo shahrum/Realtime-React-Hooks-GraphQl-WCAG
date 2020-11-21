@@ -29,10 +29,16 @@ const CreateComment = ({ classes }) => {
           onClick={() => setComment("")}
           disabled={!comment.trim()}
           className={classes.clearButton}
+          aria-label="Clear Comment"
+          label="Clear Comment"
         >
           <ClearIcon />
         </IconButton>
         <InputBase
+          inputProps={{
+            "aria-label": "Add Comment",
+            label: "Add Comment",
+          }}
           className={classes.input}
           placeholder="Add Comment"
           multiline={true}
@@ -43,6 +49,8 @@ const CreateComment = ({ classes }) => {
           onClick={handleSubmitComment}
           disabled={!comment.trim()}
           className={classes.sendButton}
+          aria-label="Send Comment"
+          label="Send Comment"
         >
           <SendIcon />
         </IconButton>

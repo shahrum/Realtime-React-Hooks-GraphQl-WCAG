@@ -45,7 +45,7 @@ const Login = ({ classes }) => {
         onSuccess={onSuccess}
         onFailure={onFailure}
         isSignedIn={true}
-        theme="dark"
+        theme="light"
         buttonText="Login with Google"
       />
     </div>

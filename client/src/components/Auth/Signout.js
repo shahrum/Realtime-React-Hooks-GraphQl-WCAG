@@ -3,7 +3,7 @@ import { GoogleLogout } from "react-google-login";
 import { withStyles } from "@material-ui/core/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Typography from "@material-ui/core/Typography";
-import { unstable_useMediaQuery as useMediaQuery } from "@material-ui/core/useMediaQuery";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import Context from "../../context";
 
@@ -41,11 +41,11 @@ const styles = {
     display: "flex",
   },
   buttonText: {
-    color: "orange",
+    color: "white",
   },
   buttonIcon: {
     marginLeft: "5px",
-    color: "orange",
+    color: "white",
   },
 };
 

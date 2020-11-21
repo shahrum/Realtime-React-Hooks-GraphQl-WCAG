@@ -4,7 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import MapIcon from "@material-ui/icons/Map";
 import Typography from "@material-ui/core/Typography";
-import { unstable_useMediaQuery as useMediaQuery } from "@material-ui/core/useMediaQuery";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import Context from "../context";
 import Signout from "../components/Auth/Signout";
@@ -40,8 +40,8 @@ const Header = ({ classes }) => {
                 alt={currentUser.name}
               />
               <Typography
-                className={mobileSize ? classes.mobile : ""}
-                variant="h5"
+                className={mobileSize ? classes.mobile : classes.username}
+                variant="h1"
                 color="inherit"
                 noWrap
               >
@@ -68,7 +68,7 @@ const styles = (theme) => ({
     alignItems: "center",
   },
   icon: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
     color: "green",
     fontSize: 45,
   },
@@ -78,7 +78,10 @@ const styles = (theme) => ({
   picture: {
     height: "50px",
     borderRadius: "90%",
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
+  },
+  username: {
+    fontSize: 24,
   },
 });
 

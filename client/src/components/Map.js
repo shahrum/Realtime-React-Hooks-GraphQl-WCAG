@@ -5,7 +5,7 @@ import differenceInMinutes from "date-fns/difference_in_minutes";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
-import { unstable_useMediaQuery as useMediaQuery } from "@material-ui/core/useMediaQuery";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Subscription } from "react-apollo";
 
 import { useClient } from "../client";
@@ -43,16 +43,13 @@ const Map = ({ classes }) => {
 
   const [popup, setPopup] = useState(null);
   // remove popup if pin itself is deleted by the author of the pin
-  useEffect(
-    () => {
-      const pinExists =
-        popup && state.pins.findIndex((pin) => pin._id === popup._id) > -1;
-      if (!pinExists) {
-        setPopup(null);
-      }
-    },
-    [state.pins.length],
-  );
+  useEffect(() => {
+    const pinExists =
+      popup && state.pins.findIndex((pin) => pin._id === popup._id) > -1;
+    if (!pinExists) {
+      setPopup(null);
+    }
+  }, [state.pins.length]);
 
   const getUserPosition = () => {
     if ("geolocation" in navigator) {
@@ -80,7 +77,7 @@ const Map = ({ classes }) => {
       payload: { longitude, latitude },
     });
   };
-
+  // let current pin
   const highlightNewPin = (pin) => {
     const isNewPin =
       differenceInMinutes(Date.now(), Number(pin.createdAt)) <= 30;
@@ -88,6 +85,7 @@ const Map = ({ classes }) => {
   };
 
   const handleSelectPin = (pin) => {
+    console.log("kiri");
     setPopup(pin);
     dispatch({ type: "SET_PIN", payload: pin });
   };
@@ -180,8 +178,19 @@ const Map = ({ classes }) => {
                 {popup.latitude.toFixed(6)}, {popup.longitude.toFixed(6)}
               </Typography>
               {isAuthUser() && (
-                <Button onClick={() => handleDeletePin(popup)}>
-                  <DeleteIcon className={classes.deleteIcon} />
+                <Button
+                  onClick={() => handleDeletePin(popup)}
+                  title="delete pin"
+                  label="delete pin"
+                  aria-label="delete pin"
+                  aria-labelledby="labeldivs"
+                >
+                  <DeleteIcon
+                    className={classes.deleteIcon}
+                    id="labeldivs"
+                    label="delete"
+                    aria-label="Delete"
+                  />
                 </Button>
               )}
             </div>
