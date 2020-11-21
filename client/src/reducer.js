@@ -58,6 +58,7 @@ export default function reducer(state, { type, payload }) {
       const filteredPins = state.pins.filter(
         (pin) => pin._id !== deletedPin._id,
       );
+      // Make sure by deleting a pin we are not closing Blog section for other users
       if (state.currentPin) {
         const isCurrentPin = deletedPin._id === state.currentPin._id;
         if (isCurrentPin) {
