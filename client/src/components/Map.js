@@ -3,6 +3,7 @@ import ReactMapGL, { NavigationControl, Marker, Popup } from "react-map-gl";
 import { withStyles } from "@material-ui/core/styles";
 import differenceInMinutes from "date-fns/difference_in_minutes";
 import { unstable_useMediaQuery as useMediaQuery } from "@material-ui/core/useMediaQuery";
+import Typography from "@material-ui/core/Typography";
 
 import { useClient } from "../client";
 import { GET_PINS_QUERY } from "../graphql/queries";
@@ -28,6 +29,19 @@ const Map = ({ classes }) => {
   useEffect(() => {
     getUserPosition();
   }, []);
+
+  const [popup, setPopup] = useState(null);
+  // remove popup if pin itself is deleted by the author of the pin
+  useEffect(
+    () => {
+      const pinExists =
+        popup && state.pins.findIndex((pin) => pin._id === popup._id) > -1;
+      if (!pinExists) {
+        setPopup(null);
+      }
+    },
+    [state.pins.length],
+  );
 
   const getUserPosition = () => {
     if ("geolocation" in navigator) {
@@ -60,6 +74,11 @@ const Map = ({ classes }) => {
     const isNewPin =
       differenceInMinutes(Date.now(), Number(pin.createdAt)) <= 30;
     return isNewPin ? "limegreen" : "darkblue";
+  };
+
+  const handleSelectPin = (pin) => {
+    setPopup(pin);
+    dispatch({ type: "SET_PIN", payload: pin });
   };
 
   return (
@@ -115,12 +134,34 @@ const Map = ({ classes }) => {
             offsetTop={-37}
           >
             <PinIcon
-              // onClick={() => handleSelectPin(pin)}
+              onClick={() => handleSelectPin(pin)}
               size={40}
               color={highlightNewPin(pin)}
             />
           </Marker>
         ))}
+
+        {/* Popup Dialog for Created Pins */}
+        {popup && (
+          <Popup
+            anchor="top"
+            latitude={popup.latitude}
+            longitude={popup.longitude}
+            closeOnClick={false}
+            onClose={() => setPopup(null)}
+          >
+            <img
+              className={classes.popupImage}
+              src={popup.image}
+              alt={popup.title}
+            />
+            <div className={classes.popupTab}>
+              <Typography>
+                {popup.latitude.toFixed(6)}, {popup.longitude.toFixed(6)}
+              </Typography>
+            </div>
+          </Popup>
+        )}
       </ReactMapGL>
 
       {/* Blog Area to add Pin Content */}
