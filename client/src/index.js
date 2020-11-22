@@ -16,7 +16,7 @@ import { WebSocketLink } from "apollo-link-ws";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
 const webSocketLink = new WebSocketLink({
-  uri: "wss://realtime-react.herokuapp.com/graphql",
+  uri: "wss://realtime-react-38cc0.firebaseapp.com/graphql",
   options: {
     reconnect: true,
   },
