@@ -85,9 +85,7 @@ const CreatePin = ({ classes }) => {
           accept="image/*"
           id="image"
           type="file"
-          label="image uploader"
-          aria-label="image uploader"
-          id="imagediv"
+          aria-labelledby="imagediv"
           className={classes.input}
           onChange={(e) => setImage(e.target.files[0])}
         />
@@ -97,7 +95,9 @@ const CreatePin = ({ classes }) => {
             component="span"
             size="small"
             className={classes.button}
-            aria-labelledby="imagediv"
+            label="image uploader"
+            aria-label="image uploader"
+            id="imagediv"
           >
             <AddAPhotoIcon />
           </IconButton>
